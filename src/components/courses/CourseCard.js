@@ -1,18 +1,19 @@
-import React from 'react';
+import {useState} from 'react';  
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
+import useFetch2 from '../customHooks/useFetch2';
 const useStyles = makeStyles({
   root: {
     minWidth: 200,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    backgroundColor: '',
+      '&:hover': {
+        background: "#e3f2fd",
+    },
   },
   title: {
     fontSize: 14,
@@ -22,36 +23,41 @@ const useStyles = makeStyles({
   },
 });
 
-const CourseCard = (props) => {
-  const classes = useStyles();
-  // const bull = <span className={classes.bullet}>•</span>;
+const CourseCard = ({course, handleMetaActivtySelected}) => {
+      const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      const classes = useStyles();
 
-  return (
-    <Box m={1}>
-      <Card className={classes.root}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {props.course.activity}
-          </Typography>
-          <Typography variant="h5" component="h2">
-            {'Company: '+ props.course.company}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            
-          </Typography>
-          <Typography variant="body2" component="p">
-            {'activity' + props.course.meta_activity}
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          {/* <Button size="small">Learn More</Button> */}
-        </CardActions>
-      </Card>
-    </Box>
+      const start = new Date(course.date_start)
+      const start_day = `${week[start.getDay()]} ${start.toISOString().split('T')[0]}`
+      const start_hour = start.toISOString().split('T')[1].split('.')[0]
+      
+      const [courseDetailsUrl] = useState(`https://api.staging.bsport.io/api/v1/meta-activity/?id__in=${course.meta_activity}&company=6`)
+      const { data : courseDetails} = useFetch2(courseDetailsUrl)
 
-  );
+      return (
+        <Box m={1}>
+          { courseDetails && 
+                <Card className={classes.root} onClick={() => handleMetaActivtySelected(course.meta_activity, course.establishment, course.coach, course.id)}>
+                <CardContent>
+                  <Typography variant="h6" component="h2" align="center" color="primary"> {courseDetails.name}
+                  </Typography>
+                  <Divider />
+
+                  <Typography className={classes.pos} color="textSecondary" align="center">{start_hour}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary" align="center">{'level:'+ course.level}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary" align="center">
+                    {course.duration_minute + ' min'}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                {start_day} 
+                </CardActions>
+              </Card>
+          }
+        </Box>
+      );
 }
 
 export default CourseCard;

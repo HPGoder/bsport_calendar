@@ -8,12 +8,13 @@ import {
 } from '@material-ui/pickers';
 
 export default function Datepicker({dates, handleDateChange}) {
-  // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = useState(new Date('2019-03-28T21:11:54'));
+
+  const [selectedDate, setSelectedDate] = useState(new Date(dates[0]));
 
   const handleDateChanges = (date) => {
     setSelectedDate(date);
   };
+
   useEffect( () => {
      handleDateChange(selectedDate) 
   },[handleDateChange, selectedDate]);
@@ -27,7 +28,7 @@ export default function Datepicker({dates, handleDateChange}) {
           format="dd/MM/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="Selected an date"
           value={selectedDate}
           onChange={handleDateChanges}
           KeyboardButtonProps={{
