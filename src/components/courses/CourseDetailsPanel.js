@@ -75,9 +75,7 @@ const CourseDetailsPanel = ({metaActivitySelected, establishmentSelected, coachS
                     </ListItemAvatar>
                     <ListItemText primary={metaActivityDetails.name} secondary={metaActivityDetails.description} />
                 </ListItem>
-            
                 <Bookings offerSelected={offerSelected}/>
-            
             </List>
             }
             

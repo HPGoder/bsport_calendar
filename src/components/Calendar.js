@@ -1,12 +1,20 @@
 import React from 'react';
 import {useState} from 'react';
-import Navbar from './Navbar'
+import Navbar from './Navbar/Navbar'
 import CoursesGrid from './courses/CoursesGrid'
-import Bookings from './courses/Bookings'
 import useFetch from './customHooks/useFetch';
+
+
 export default function Calendar() {
 
-    const [dates] = useState(['2019-03-28', '2019-04-04'])
+    // Starting with today's date in proper format
+    let new_date = new Date();
+    let new_date_7= new Date();
+    new_date_7.setDate(new_date.getDate()+7)
+    const today = new_date.toISOString().split('T')[0]
+    const today_7 = new_date_7.toISOString().split('T')[0]
+
+    const [dates] = useState([today, today_7])
     const [url, setUrl] = useState(`https://api.staging.bsport.io/api/v1/offer/?min_date=${dates[0]}&max_date=${dates[1]}&company=6`)
     
     const handleDateChange = (date) => {
@@ -21,7 +29,6 @@ export default function Calendar() {
 
     return (
         <div className="content">
-            <Bookings/>
             <Navbar dates ={dates} handleDateChange={handleDateChange}/>
             <div className="calendar">
                 <div className="calendar-body" style={{'paddingTop':'50px'}}>

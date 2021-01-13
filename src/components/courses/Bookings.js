@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import Typography from '@material-ui/core/Typography';
 // import MemberCard from './MemberCard';
 
 const Bookings = (offerSelected) => {
 
     const [bookingsUrl, setBookingsUrl] = useState(null)
     const [bookings, setBookings] = useState(null);
-    // const [idmemberList, SetIdMemberList] = useState(null);
 
     useEffect(() =>{
         setBookingsUrl(`https://api.staging.bsport.io/api/v1/booking/?offer=${offerSelected.offerSelected}`);
@@ -19,18 +19,12 @@ const Bookings = (offerSelected) => {
         }).catch(error => {
             console.log('Booking error ' + error)
          })
-        //  if (bookings){
-        //     const IDs = bookings.map( booking =>{
-        //         return booking.member
-        //     });
-        //     SetIdMemberList(IDs)
-        // }
     }, [offerSelected.offerSelected])
 
   
     return ( 
         <div>
-            Attendents
+            <Typography variant="overline" component="h1" align="center" color="primary">ATTENDENTS</Typography>
         </div>
      );
 }

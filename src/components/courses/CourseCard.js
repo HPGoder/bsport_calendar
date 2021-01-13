@@ -9,11 +9,12 @@ import Divider from '@material-ui/core/Divider';
 import useFetch2 from '../customHooks/useFetch2';
 const useStyles = makeStyles({
   root: {
-    minWidth: 200,
+    minWidth: 100,
     backgroundColor: '',
       '&:hover': {
         background: "#e3f2fd",
     },
+    border :1,
   },
   title: {
     fontSize: 14,
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  level2: {
+    backgroundColor :'red',
+  }
 });
 
 const CourseCard = ({course, handleMetaActivtySelected}) => {
@@ -37,7 +41,8 @@ const CourseCard = ({course, handleMetaActivtySelected}) => {
       return (
         <Box m={1}>
           { courseDetails && 
-                <Card className={classes.root} onClick={() => handleMetaActivtySelected(course.meta_activity, course.establishment, course.coach, course.id)}>
+                <Card className={classes.root} 
+                onClick={() => handleMetaActivtySelected(course.meta_activity, course.establishment, course.coach, course.id)}>
                 <CardContent>
                   <Typography variant="h6" component="h2" align="center" color="primary"> {courseDetails.name}
                   </Typography>
@@ -45,10 +50,10 @@ const CourseCard = ({course, handleMetaActivtySelected}) => {
 
                   <Typography className={classes.pos} color="textSecondary" align="center">{start_hour}
                   </Typography>
-                  <Typography className={classes.pos} color="textSecondary" align="center">{'level:'+ course.level}
+                  <Typography className={classes.pos} color="textSecondary" align="center">{'level '+ course.level}
                   </Typography>
                   <Typography className={classes.pos} color="textSecondary" align="center">
-                    {course.duration_minute + ' min'}
+                    {'Duration: '+course.duration_minute + 'min'}
                   </Typography>
                 </CardContent>
                 <CardActions>
